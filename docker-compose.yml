@@ -3,11 +3,20 @@ services:
     image: prom/prometheus
     volumes:
     - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    - ./rules:/etc/prometheus/rules
     ports:
       - 9090:9090
     environment:
     - NODE_ENV=development
     - PORT=9090
+
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    restart: unless-stopped
+    volumes:
+      - ./alertmanager:/etc/alertmanager
+    ports:
+      - 9093:9093
 
   grafana:
     image: grafana/grafana
