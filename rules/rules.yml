@@ -3,8 +3,33 @@ groups:
   rules:
   - alert: HighCPU
     expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
-    for: 1m
+    for: 5m
     labels:
       severity: critical
+      job: node-exporter-fpub
     annotations:
       summary: "CPU élevé sur {{ $labels.instance }}"
+  - alert: HighCPU
+    expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+    for: 5m
+    labels:
+      severity: critical
+      job: node-exporter
+    annotations:
+      summary: "CPU élevé sur {{ $labels.instance }}"
+  - alert: HighMemory
+    expr: (node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Buffers_bytes - node_memory_Cached_bytes) / node_memory_MemTotal_bytes * 100 > 80
+    for: 5m
+    labels:
+      severity: critical
+      job: node-exporter-fpub
+    annotations:
+      summary: "Mémoire élevée sur {{ $labels.instance }}"
+  - alert: HighMemory
+    expr: (node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Buffers_bytes - node_memory_Cached_bytes) / node_memory_MemTotal_bytes * 100 > 80
+    for: 5m
+    labels:
+      severity: critical
+      job: node-exporter
+    annotations:
+      summary: "Mémoire élevée sur {{ $labels.instance }}"
