@@ -28,6 +28,8 @@ services:
     environment:
     - NODE_ENV=development
     - PORT=3000
+    - GF_SECURITY_ADMIN_PASSWORD=admin12Amin
+    - GF_SECURITY_ADMIN_USER=admin
 
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest
